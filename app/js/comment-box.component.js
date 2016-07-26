@@ -3,18 +3,18 @@ angular.module('commentsShowcaseApp').component('commentBox', {
   controller: function(){
   	var ctrl = this;
   	ctrl.publishComment = function(){
-  		ctrl.onPublish ({
-  			comment: {	
+  		ctrl.onPublish ({	
   				topic: ctrl.topic,
-  			  	body: ctrl.body
-  			}
+  			  body: ctrl.body
   		});
-  		ctrl.show = false;
+      ctrl.topic = "";
+      ctrl.body = "";
   	}
   },
   bindings: {
   	show: "=",
   	topLevel: "<",
-  	onPublish: "&"
+  	onPublish: "&",
+    onHideButtonClick: "&"
   }
 });

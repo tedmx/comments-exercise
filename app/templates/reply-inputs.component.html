@@ -1,0 +1,11 @@
+<a 
+	href="#" 
+	ng-hide="$ctrl.showReplyBox" 
+	ng-click="$ctrl.showReplyBox = true" >
+	Leave a reply
+</a>
+<comment-box 
+	ng-if="$ctrl.showReplyBox" 
+	on-publish="$ctrl.onPublish(topic, body)"
+	on-hide-button-click="$ctrl.showReplyBox = false">
+</comment-box>

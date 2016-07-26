@@ -1,19 +1,20 @@
 angular.module('commentsShowcaseApp').component('comment', {
   templateUrl: 'templates/comment.component.html',
   controller: function (){
-  	this.showReplyBox = false;
-  	this.onHideCommentBox = function(){
-  		this.showReplyBox = false;
-  	};
-    this.addSubcomment = function(comment){
-      var commentData = Object.assign(comment, {replies: []});
-      this.replies.push(commentData);
+    this.save = function(){
+      this.data.topic = this.topicEdits;
+      this.data.body = this.bodyEdits;
+      this.editMode = false;
+    }
+    this.enableEditMode = function(){
+      this.topicEdits = this.data.topic;
+      this.bodyEdits = this.data.body;
+      this.editMode = true;
     }
   },
   bindings: {
-  	topic: "<",
-  	body: "<",
-  	replies: "=",
-    onDeleteButtonClick: "&"
+  	data: "=",
+    onDeleteButtonClick: "&",
+    onSaveButtonClick: "&"
   }
 });

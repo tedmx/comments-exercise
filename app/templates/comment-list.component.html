@@ -1,8 +1,6 @@
-<div class='commentList' ng-repeat="comment in $ctrl.list">
-	<comment 
-		topic="comment.topic" 
-		body="comment.body"
-		replies="comment.replies"  
+<ng-repeat ng-if="$ctrl.list" ng-repeat="comment in $ctrl.list">
+	<comment-and-replies 
+		comment="comment"  
 		on-delete-button-click="$ctrl.removeComment($index)">
-	</comment>
-</div>
+	</comment-and-replies>
+</ng-repeat>

@@ -1,35 +1,30 @@
-<div class='commentWrap'>
-	<ng-include src="hello_world.html"></ng-include>
+<div>
+	<label class='topic'>Topic:</label>
+	<span ng-hide="$ctrl.editMode">{{$ctrl.data.topic}}</span>
+	<input ng-if="$ctrl.editMode"  type="text" ng-model="$ctrl.topicEdits"/>
+</div>
 
-	<p>Topic: <span>{{$ctrl.topic}}</span><!--input type="text" ng-model="topicEdits"/--></p>
-	<p>Body: <span>{{$ctrl.body}}</span><!--textarea ng-model="bodyEdits"></textarea--></p>
-	<!--input type="button" 
-			class='saveEdits' 
-			value="Save"  
-			ng-click="$ctrl.confirmEdits"/-->
-	<a 
-		href="#" 
-		ng-hide="$ctrl.showReplyBox" 
-		ng-click="$ctrl.showReplyBox = true" >
-		Leave a reply
-	</a>
-	<comment-box 
-		ng-if="$ctrl.showReplyBox" 
-		show="$ctrl.showReplyBox" 
-		on-publish="$ctrl.addSubcomment(comment)">
-	</comment-box>
-	<comment-list 
-		ng-if="$ctrl.replies" 
-		list="$ctrl.replies" >
-	</comment-list>
-	<div class="controlsSidePane">
-		<input type="button" 
-			class='editButtom' 
-			value="Edit"  
-			ng-click="$ctrl.show = false"/>
-		<input type="button" 
-			class='deleteButton' 
-			value="Delete"  
-			ng-click="$ctrl.onDeleteButtonClick()"/>
-	</div>
+<div>
+	<label class='body'>Body:</label>
+	<span ng-hide="$ctrl.editMode">{{$ctrl.data.body}}</span>
+	<textarea ng-if="$ctrl.editMode" ng-model="$ctrl.bodyEdits"></textarea>
+</div>
+
+<input ng-if="$ctrl.editMode" type="button" 
+		class='saveEdits' 
+		value="Save"  
+		ng-click="$ctrl.save()"/>
+
+<div class="controlsSidePane">
+	<input type="button" 
+		value="Edit"  
+		ng-hide="$ctrl.editMode"
+		ng-click="$ctrl.enableEditMode()"/>
+	<input type="button" 
+		value="Cancel edits"  
+		ng-if="$ctrl.editMode"
+		ng-click="$ctrl.editMode = false"/>
+	<input type="button" 
+		value="Delete"  
+		ng-click="$ctrl.onDeleteButtonClick()"/>
 </div>

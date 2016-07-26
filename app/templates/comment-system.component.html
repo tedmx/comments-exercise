@@ -1,4 +1,5 @@
-<div>
-	<comment-list list="$ctrl.commentData"></comment-list>
-	<comment-box top-level="true"></comment-box>
-</div>
+<comment-list list="$ctrl.commentData"></comment-list>
+<comment-box 
+	top-level="true" 
+	on-publish="$ctrl.publishTopLevelComment(topic,body)">
+</comment-box>
