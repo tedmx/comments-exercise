@@ -1,0 +1,10 @@
+<div class='well commentBox'>
+	<input type='area' placeholder="Topic" ng-model="$ctrl.topic"/>
+	<textarea placeholder="Message body" ng-model="$ctrl.body"></textarea>
+	<input type="button" ng-click="$ctrl.publishComment()" value="Submit"/>
+	<input type="button" 
+		class='hideButton' 
+		value="Hide"  
+		ng-hide="$ctrl.topLevel"
+		ng-click="$ctrl.show = false"/>
+</div>

@@ -1,0 +1,35 @@
+<div class='commentWrap'>
+	<ng-include src="hello_world.html"></ng-include>
+
+	<p>Topic: <span>{{$ctrl.topic}}</span><!--input type="text" ng-model="topicEdits"/--></p>
+	<p>Body: <span>{{$ctrl.body}}</span><!--textarea ng-model="bodyEdits"></textarea--></p>
+	<!--input type="button" 
+			class='saveEdits' 
+			value="Save"  
+			ng-click="$ctrl.confirmEdits"/-->
+	<a 
+		href="#" 
+		ng-hide="$ctrl.showReplyBox" 
+		ng-click="$ctrl.showReplyBox = true" >
+		Leave a reply
+	</a>
+	<comment-box 
+		ng-if="$ctrl.showReplyBox" 
+		show="$ctrl.showReplyBox" 
+		on-publish="$ctrl.addSubcomment(comment)">
+	</comment-box>
+	<comment-list 
+		ng-if="$ctrl.replies" 
+		list="$ctrl.replies" >
+	</comment-list>
+	<div class="controlsSidePane">
+		<input type="button" 
+			class='editButtom' 
+			value="Edit"  
+			ng-click="$ctrl.show = false"/>
+		<input type="button" 
+			class='deleteButton' 
+			value="Delete"  
+			ng-click="$ctrl.onDeleteButtonClick()"/>
+	</div>
+</div>

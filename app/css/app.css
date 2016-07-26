@@ -1,0 +1,42 @@
+.commentWrap {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.commentList {
+    margin-top: 20px;
+}
+
+textarea {
+    display: block;
+    margin: 30px 0px;
+    height: 100px;
+    width: 100%;
+}
+
+.commentBox {
+    display: block;
+}
+
+.commentWrap .commentBox {
+    position: relative;
+    margin-left: 20px;
+}
+
+
+input.hideButton {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+
+.commentWrap {
+    position: relative;
+}
+
+.controlsSidePane {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 10px;
+}
