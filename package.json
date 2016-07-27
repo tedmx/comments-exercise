@@ -1,6 +1,14 @@
 {
   "name": "comments-exercise",
+  "description": "A bit of AngularJS 1.x applied to a comment system snippet",
+  "repository": "https://github.com/tedmx/comments-exercise",
+  "license": "MIT",
+  "devDependencies": {
+    "bower": "^1.7.7"
+  },
   "scripts": {
+    "postinstall": "bower install",
+    "prestart": "npm install",
     "start": "http-server ./app -a localhost -p 8000 -c-1"
   }
 }

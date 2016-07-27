@@ -1,5 +1,10 @@
 angular.module('commentsShowcaseApp')
 .factory('commentsStorage', function() {
+
+  function clone(obj){
+    return JSON.parse(JSON.stringify(obj));
+  }
+
   var commentData = [
     {
       topic: "A",
@@ -22,7 +27,7 @@ angular.module('commentsShowcaseApp')
   ];
   return {
   	getCommentData: function(){
-      return commentData;
+      return clone(commentData);
     }
   };
 });

@@ -12,7 +12,6 @@ angular.module('commentsShowcaseApp').component('commentBox', {
   	}
   },
   bindings: {
-  	show: "=",
   	topLevel: "<",
   	onPublish: "&",
     onHideButtonClick: "&"

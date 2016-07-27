@@ -5,7 +5,7 @@
 <reply-inputs 
 	body="$ctrl.comment.body" 
 	topic="$ctrl.comment.topic"
-	on-publish="$ctrl.onPublish(topic,body)">
+	on-publish="$ctrl.onAddReply(topic,body)">
 </reply-inputs>
 <comment-list  
 	list="$ctrl.comment.replies">

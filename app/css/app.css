@@ -11,6 +11,7 @@ comment-list {
     margin-bottom: 20px;
     margin-top: 20px;
     display: block;
+    max-width: 700px;
 }
 
 
@@ -41,4 +42,12 @@ input.hideButton {
     right: 10px;
     top: 10px;
     font-size: 10px;
+}
+
+input.dataReset { 
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+.topicField {
+    width: 70%;
 }

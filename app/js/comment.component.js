@@ -14,7 +14,6 @@ angular.module('commentsShowcaseApp').component('comment', {
   },
   bindings: {
   	data: "=",
-    onDeleteButtonClick: "&",
-    onSaveButtonClick: "&"
+    onDeleteButtonClick: "&"
   }
 });

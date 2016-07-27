@@ -10,7 +10,6 @@ angular.module('commentsShowcaseApp').component('replyInputs', {
   bindings: {
   	topic: "<",
   	body: "<",
-  	replies: "=",
     superOnPublish: "&onPublish"
   }
 });
