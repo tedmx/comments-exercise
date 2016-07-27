@@ -1,14 +1,14 @@
-<div>
+<section>
 	<label class='topic'>Topic:</label>
 	<span ng-hide="$ctrl.editMode">{{$ctrl.data.topic}}</span>
 	<input ng-if="$ctrl.editMode"  type="text" ng-model="$ctrl.topicEdits"/>
-</div>
+</section>
 
-<div>
+<section>
 	<label class='body'>Body:</label>
 	<span ng-hide="$ctrl.editMode">{{$ctrl.data.body}}</span>
 	<textarea ng-if="$ctrl.editMode" ng-model="$ctrl.bodyEdits"></textarea>
-</div>
+</section>
 
 <input ng-if="$ctrl.editMode" type="button" 
 		class='saveEdits' 

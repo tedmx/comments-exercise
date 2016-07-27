@@ -51,3 +51,21 @@ input.dataReset {
 .topicField {
     width: 70%;
 }
+
+comment section > * {
+    vertical-align: top;
+    display: inline;
+}
+
+comment section textarea {
+    width: 60%;
+}
+
+comment section + * {
+    margin-top: 20px;
+}
+
+comment-and-replies reply-inputs {
+    display: block;
+    margin-top: 15px;
+}
