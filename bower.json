@@ -2,6 +2,7 @@
   "name": "comments-exercise",
   "dependencies": {
     "angular": "1.5.x",
-    "bootstrap": "3.3.x"
+    "bootstrap": "3.3.x",
+    "angular-mocks": "1.5.x"
   }
 }

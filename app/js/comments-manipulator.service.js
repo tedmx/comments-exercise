@@ -3,7 +3,7 @@ angular.module('commentsShowcaseApp')
 
   return {
   	addComment: function(commentList,topic,body){
-     var newComment = {
+      var newComment = {
         topic: topic, 
         body: body, 
         replies: []

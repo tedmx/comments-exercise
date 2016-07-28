@@ -5,19 +5,22 @@ angular.module('commentsShowcaseApp')
     'commentsStorage', 
     '$scope', 
     'commentsManipulator', 
-    function (commentsStorage, 
+    function CommentSystemController(commentsStorage, 
       $scope, 
       commentsManipulator){
 
+
       var ctrl = this;
 
+      ctrl.log = "";
+      
       ctrl.getDefaultData = function(){
         ctrl.commentData = commentsStorage.getCommentData();
       }
 
       var localStorageStringData = localStorage.getItem('comments_showcase_app');
 
-      if(localStorageStringData != "undefined"){
+      if(localStorageStringData != null && localStorageStringData != "undefined"){
         ctrl.commentData = JSON.parse(localStorageStringData);
       } else {
         ctrl.getDefaultData();
