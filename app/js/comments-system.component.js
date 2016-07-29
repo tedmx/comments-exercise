@@ -1,12 +1,12 @@
 angular.module('commentsShowcaseApp')
-.component('commentSystem', {
-  templateUrl: 'templates/comment-system.component.html',
+.component('commentsSystem', {
+  templateUrl: 'templates/comments-system.component.html',
   controller: [
     'commentsStorage', 
     '$scope',
     'commentDataUtils',
 
-    function CommentSystemController(
+    function CommentsSystemController(
 
       commentsStorage, 
       $scope,

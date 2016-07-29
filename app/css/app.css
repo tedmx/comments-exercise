@@ -1,11 +1,9 @@
-
-
 comment {
     position: relative;
     display: block;
 }
 
-comment-list {
+comments-list {
     position: relative;
     padding-left: 20px;
     margin-bottom: 20px;
@@ -14,8 +12,7 @@ comment-list {
     max-width: 700px;
 }
 
-
-comment-list comment-box {
+comments-list comment-box {
     position: relative;
     margin-left: 20px;
 }

@@ -1,6 +1,6 @@
 angular.module('commentsShowcaseApp')
-.component('commentList', {
-  templateUrl: 'templates/comment-list.component.html',
+.component('commentsList', {
+  templateUrl: 'templates/comments-list.component.html',
   controller: ['commentsStorage', '$scope', function (commentsStorage, $scope){
   	var ctrl = this;
   	ctrl.removeComment = function(DOMIndex){

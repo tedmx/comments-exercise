@@ -1,145 +1,105 @@
 angular.module('commentsShowcaseApp')
-.factory('commentsStorage', ['commentDataUtils', 'jsUtils', function(commentDataUtils, jsUtils) {
+.factory(
 
-  var workCopyData = [],
-      index = {}; 
+  'commentsStorage', 
 
-  function resetToDefaultData(){
-    return getFullCommentData(true);
-  }
+  [ 'commentsDataManager', 
+    'commentDataUtils', 
+    'jsUtils', 
 
-  function getFullCommentData(forceDefaultData){
+    function(
+      commentsDataManager, 
+      commentDataUtils, 
+      jsUtils) {
 
-    var localStorageStringData = window.localStorage.getItem('comments_showcase_app'),
-        deliverable;
+      var workCopyData = [],
+          index = {}; 
 
-    if(localStorageStringData != null && localStorageStringData != "undefined" && !forceDefaultData){
-      workCopyData = JSON.parse(localStorageStringData);
-    } else {
-      workCopyData = commentDataUtils.defaultData;
-      updateLocalStorage();
-    }
-
-    for (commentData of workCopyData){
-      index[commentData.id] = commentData;
-    }
-
-    return new Promise(function(resolve){
-      window.setTimeout(()=>{
-        resolve(jsUtils.clone(workCopyData));
-      },globalPromiseDelay());
-    });
-
-  }
-
-  function updateLocalStorage(){
-    window.localStorage.setItem(
-      'comments_showcase_app',
-      JSON.stringify(workCopyData)
-    );
-  }
-
-  function lowestUnoccupiedID(){
-    var i;
-    for(i=0; index[i]; i++){};
-    return i;
-  }
-
-  function globalPromiseDelay(){
-    return 500+300*Math.random();
-  }
-
-  function addComment(topic, body, options){
-
-    var optionsObject = {};
-    var IDOfNewComment = lowestUnoccupiedID();
-
-    var newComment = {
-      id: IDOfNewComment,
-      topic: topic,
-      body: body,
-    };
-
-    if(jsUtils.isNumeric(options)){
-
-      var parentID = options;
-
-      if(index[parentID].replies){
-        index[parentID].replies.push(IDOfNewComment);
-      } else {
-        index[parentID].replies = [IDOfNewComment];
+      function resetToDefaultData(){
+        return getFullCommentData(true);
       }
 
-      newComment.parent = parentID;
+      function getFullCommentData(forceDefaultData){
 
-    } else if(options instanceof Object && options.topLevel){
-      newComment.topLevel = true;
-    }
+        var localStorageStringData = window.localStorage.getItem('comments_showcase_app'),
+            deliverable;
 
-    workCopyData.push(newComment);
-    index[IDOfNewComment] = newComment;
-    updateLocalStorage();
 
-    return new Promise(function(resolve){
-      window.setTimeout(()=>{
-        resolve(jsUtils.clone(newComment));
-      },globalPromiseDelay());
-    });
+        var startupData;
 
-  }
+        if (
+          forceDefaultData
+          || localStorageStringData == 'undefined'
+          || localStorageStringData == null
+        ) {
 
-  function removeComment(id){
+          startupData = commentDataUtils.defaultData;
+          updateLocalStorage(commentDataUtils.defaultData);
 
-    var commentTBRemoved = index[id],
-        children = index[id].replies;
-    if(children){
-      for(child of children){
-        removeComment(child);
+        } else {
+          startupData = JSON.parse(localStorageStringData);
+        }
+
+        commentsDataManager.initWith(startupData);
+
+        return timeoutPromise(startupData);
+
       }
-    }
 
-    if(!commentTBRemoved.topLevel){
-      var parentObject = index[commentTBRemoved.parent];
-      var indexInParentsReplyArray = parentObject.replies.indexOf(id);
-      parentObject.replies.splice(indexInParentsReplyArray, 1);
-    }
+      function updateLocalStorage(data){
+        window.localStorage.setItem(
+          'comments_showcase_app',
+          JSON.stringify(data)
+        );
+      }
 
-    var indexInWorkCopyArray = workCopyData.indexOf(commentTBRemoved);
-    workCopyData.splice(indexInWorkCopyArray, 1);
+      // Input data won't be mutilated by recieving party
+      function timeoutPromise(data){
 
-    delete index[id];
-  }
+        var dataToSend = data instanceof Object ? jsUtils.clone(data) : data;
 
-  function removeCommentAndSendPromise(id){
+        return new Promise(function(resolve){
+          window.setTimeout(()=>{
+            resolve(dataToSend);
+          }, 500+300*Math.random());
+        });
+      }
 
-    removeComment(id);
-    updateLocalStorage();
+      // Wrappers around low-level commentsDataManager service methods
+      function addComment(topic, body, options){
 
-    return new Promise(function(resolve){
-      window.setTimeout(()=>{
-        resolve(true);
-      },globalPromiseDelay());
-    });
-  }
+        var responseAsComment = commentsDataManager.addComment(topic, body, options);
+        updateLocalStorage(commentsDataManager.getFullCommentData());
 
-  function modifyComment(id, topic, body){
-    index[id].topic = topic;
-    index[id].body = body;
-    updateLocalStorage();
+        return timeoutPromise(responseAsComment);
 
-    return new Promise(function(resolve){
-      window.setTimeout(()=>{
-        resolve(jsUtils.clone(index[id]));
-      },globalPromiseDelay());
-    });
-  }
+      }
 
-  return {
-  	getFullCommentData: getFullCommentData,
-    addComment: addComment,
-    removeComment: removeCommentAndSendPromise,
-    resetToDefaultData: resetToDefaultData,
-    modifyComment: modifyComment
-  };
+      function removeComment(id){
+
+        commentsDataManager.removeComment(id);
+        updateLocalStorage(commentsDataManager.getFullCommentData());
+
+        return timeoutPromise(true);
+
+      }
+
+      function modifyComment(id, topic, body){
+
+        var modifiedComment = commentsDataManager.modifyComment(id, topic, body);
+        updateLocalStorage(commentsDataManager.getFullCommentData());
+
+        return timeoutPromise(modifiedComment);
+      }
+
+      return {
+
+      	getFullCommentData: getFullCommentData,
+        addComment: addComment,
+        modifyComment: modifyComment,
+        removeComment: removeComment,
+        resetToDefaultData: resetToDefaultData
+
+      };
 
 }]);

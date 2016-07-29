@@ -45,12 +45,13 @@ angular.module('commentsShowcaseApp', [])
       }
     ],
 
+    // Pure function, rigged with unit-tests
     commentDataTreeFromArray: function(arr){
 
         var index = {},
             deliverable = [];
 
-        for (let flatCommentElement of arr){
+        for (var flatCommentElement of arr){
           index[flatCommentElement.id] = flatCommentElement;
           if(flatCommentElement.topLevel){
             deliverable.push(flatCommentElement);

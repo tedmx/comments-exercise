@@ -4,24 +4,20 @@ angular.module('commentsShowcaseApp').component('commentAndReplies', {
 
     var ctrl = this;
     this.onAddReply = 
-
       (topic, body) => {
-
-      if(!this.comment.replies){
-        this.comment.replies = [];
-      }
-
-      commentsStorage.addComment(
-        topic, 
-        body,
-        this.comment.id
-      ).then((response)=>{
-        $scope.$apply(()=>{
-          this.comment.replies.push(response);
+        commentsStorage.addComment(
+          topic, 
+          body,
+          this.comment.id
+        ).then((response)=>{
+          $scope.$apply(()=>{
+            if(!this.comment.replies){
+              this.comment.replies = [];
+            }
+            this.comment.replies.push(response);
+          });
         });
-      });
-
-    };
+      };
 
   }],
   bindings: {
