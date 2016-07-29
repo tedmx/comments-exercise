@@ -6,7 +6,7 @@ describe('commentSystem', function() {
 
   describe('CommentSystemController', function() {
 
-    it('should initialize with `commentData` defined as an Array', inject(function($componentController) {
+    /*it('should initialize with `commentData` defined as an Array', inject(function($componentController) {
       var ctrl = $componentController('commentSystem');
       expect(ctrl.commentData).toEqual(jasmine.any(Array));
     }));
@@ -43,7 +43,7 @@ describe('commentSystem', function() {
 
       expect(ctrl.commentData[0].topic).toEqual('B');
 
-    }));
+    }));*/
 
   });
 

@@ -1,15 +1,26 @@
 angular.module('commentsShowcaseApp').component('commentAndReplies', {
   templateUrl: 'templates/comment-and-replies.component.html',
-  controller: ['commentsManipulator', function (commentsManipulator){
+  controller: ['commentsStorage', '$scope', function (commentsStorage, $scope){
 
     var ctrl = this;
     this.onAddReply = 
+
       (topic, body) => {
-      commentsManipulator.addComment(
-        this.comment.replies,
+
+      if(!this.comment.replies){
+        this.comment.replies = [];
+      }
+
+      commentsStorage.addComment(
         topic, 
-        body
-      );
+        body,
+        this.comment.id
+      ).then((response)=>{
+        $scope.$apply(()=>{
+          this.comment.replies.push(response);
+        });
+      });
+
     };
 
   }],

@@ -3,45 +3,47 @@ angular.module('commentsShowcaseApp')
   templateUrl: 'templates/comment-system.component.html',
   controller: [
     'commentsStorage', 
-    '$scope', 
-    'commentsManipulator', 
-    function CommentSystemController(commentsStorage, 
-      $scope, 
-      commentsManipulator){
+    '$scope',
+    'commentDataUtils',
 
+    function CommentSystemController(
+
+      commentsStorage, 
+      $scope,
+      commentDataUtils
+
+    ){
 
       var ctrl = this;
 
-      ctrl.log = "";
-      
-      ctrl.getDefaultData = function(){
-        ctrl.commentData = commentsStorage.getCommentData();
-      }
-
-      var localStorageStringData = localStorage.getItem('comments_showcase_app');
-
-      if(localStorageStringData != null && localStorageStringData != "undefined"){
-        ctrl.commentData = JSON.parse(localStorageStringData);
-      } else {
-        ctrl.getDefaultData();
-      }
-
-      $scope.$watch(function(){
-        return $scope.$ctrl.commentData;
-      }, function(newValue, oldValue){
-        window.localStorage.setItem(
-          'comments_showcase_app',
-          angular.toJson(newValue)
-        );
-      }, true);
+      commentsStorage.getFullCommentData()
+      .then((flatCommentData) => {
+        $scope.$apply(()=>{
+          ctrl.commentData = commentDataUtils.commentDataTreeFromArray(flatCommentData);
+        });
+      });
 
       ctrl.publishTopLevelComment = 
         (topic, body) => {
-        commentsManipulator.addComment(
-          ctrl.commentData,
+        commentsStorage.addComment(
           topic, 
-          body
-        );
+          body,
+          {topLevel: true}
+        ).then((response)=>{
+          $scope.$apply(()=>{
+            ctrl.commentData.push(response);
+          });
+        });
+      };
+
+      ctrl.getDefaultData = 
+        () => {
+        commentsStorage.resetToDefaultData()
+        .then((flatDefaultData) => {
+          $scope.$apply(()=>{
+            ctrl.commentData = commentDataUtils.commentDataTreeFromArray(flatDefaultData);
+          });
+        });
       };
       
   }]

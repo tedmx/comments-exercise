@@ -1,17 +1,27 @@
 angular.module('commentsShowcaseApp').component('comment', {
   templateUrl: 'templates/comment.component.html',
-  controller: function (){
+  controller: ['commentsStorage', '$scope', function (commentsStorage, $scope){
     this.save = function(){
-      this.data.topic = this.topicEdits;
-      this.data.body = this.bodyEdits;
-      this.editMode = false;
+
+      commentsStorage.modifyComment(
+        this.data.id,
+        this.topicEdits,
+        this.bodyEdits
+      ).then((modifiedCommentAsResponse)=>{
+        $scope.$apply(()=>{
+          this.data = modifiedCommentAsResponse;
+          this.editMode = false;
+        });
+      });
+
     }
+
     this.enableEditMode = function(){
       this.topicEdits = this.data.topic;
       this.bodyEdits = this.data.body;
       this.editMode = true;
     }
-  },
+  }],
   bindings: {
   	data: "=",
     onDeleteButtonClick: "&"
